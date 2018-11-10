@@ -1,3 +1,5 @@
+language: python
+
 env:
   global:
   - CIBW_BEFORE_BUILD="yum install -y gcc && yum install -y glibc.i686 && pip install
@@ -7,17 +9,20 @@ env:
   - CIBW_TEST_COMMAND="cd {project}/test && nose2"
   - CIBW_SKIP="cp33-* cp34-*"
   - TWINE_USERNAME=mmatl
+
 matrix:
   include:
-  - dist: trusty
-    sudo: required
-    language: python
-    python: '3.6'
-    services:
-    - docker
+    - sudo: required
+      services:
+        - docker
+      env: PIP=pip
+    - os: osx
+      language: generic
+      env: PIP=pip2
+
 install:
-- if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then brew install python3; fi
-- pip3 install cibuildwheel==0.10.0
+- $PIP install cibuildwheel==0.10.0
+
 script:
 - cibuildwheel --output-dir wheelhouse
 - |
