@@ -12,7 +12,7 @@ env:
                              cd requirements &&
                              bash clone.bash &&
                              bash build.bash"
-
+  - CIBW_ENVIRONMENT_MACOS="CC=clang CXX=clang++"
   - CIBW_TEST_REQUIRES="nose2"
   - CIBW_TEST_COMMAND="cd {project}/test && nose2"
   - CIBW_SKIP="cp33-* cp34-*"
