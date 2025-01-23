@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - rename
 
 jobs:
   build_wheels:
